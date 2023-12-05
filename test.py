@@ -667,6 +667,113 @@ our_iterable = filled_dict2.keys()
 def varargs(*args):
     return args
 
-print(varargs) # => (1, 2, 3)
+# print(varargs(1,"bag", [1,2,3],4)) # => (1, 2, 3)
+
+# You can define functions that take a variable number
+# of # keyword arguments, as well
+def keyword_args(**kwargs):
+    return kwargs
+
+# Let's call it to see what happens
+# print(keyword_args(foot="Big", loch="ness")) # => {'foot': 'Big', 'loch': 'ness'}
+
+# You can do both at once, if you like
+def all_the_args(*args, **kwargs):
+    print(args)
+    print(kwargs)
+
+"""
+all_the_args(1, 2, a=3, b=4) prints:
+    (1, 2)
+    {"a": 3, "b": 4}
+"""
+# all_the_args(1, 2, a=3, b=4) 
+
+# When calling functions, you can do the opposite of args/kwargs!
+# Use * to expand args (tuples) and use ** to expand kwargs (dictionaries).
+
+args = (1, 2, 3, 4)
+kwargs = {"a": 3, "b": 4}
+
+# all_the_args(*args)  # equivalent: all_the_args(1, 2, 3, 4)
+# all_the_args(**kwargs)  # equivalent: all_the_args(a=3, b=4)
+# all_the_args(*args, **kwargs) # equivalent: all_the_args(1, 2, 3, 4, a=3, b=4)
+
+# Returning multiple values (with tuple assignments)
+def swap(x, y):
+    return y, x  # Return multiple values as a tuple without the parenthesis.
+# (Note: parenthesis have been excluded but can be included)
+# print(swap(4, 5))
+# x = 1
+# y = 2
+# x, y = swap(x, y)   # => x = 2, y = 1
+# (x, y) = swap(x,y)  # Again the use of parenthesis is optional.
+# print(x, y)
+
+# global scope
+x = 5
+
+def set_x(num):
+    # local scope begins here
+    # local var x not the same as global var x
+    x = num  # => 43
+    print(x)  # => 43
+
+def set_global_x(num):
+    # global indicates that particular var lives in the global scope
+    global x
+    print(x)    # => 5
+    x = num     # global var x is now set to 6
+    print(x)    # => 6
+
+# set_x(43)
+# set_global_x(6)
+"""
+prints:
+    43
+    5
+    6
+"""
 
 
+# Python has first class functionsdef
+def create_adder(x):
+    def adder(y):
+        return x + y
+    return adder
+
+add_10 = create_adder(10)
+# print(add_10(3))
+
+# There are also anonymous functions
+# print((lambda x: x > 2)(3)) # => True
+# print((lambda x, y: x ** 2 + y ** 2)(2, 1)) # => 5
+
+
+# There are built-in higher order functions
+# print(list(map(add_10, [1, 2, 3, 4]))) #[11, 12, 13, 14]
+# print(list(map(max, [1, 2, 3], [4, 2, 1])))  # => [4, 2, 3]
+
+# print(list(filter(lambda x: x > 5, [3, 4, 5, 6, 7]))) # => [6, 7]
+
+
+# We can use list comprehensions for nice maps and filters
+# List comprehension stores the output as a list (which itself may be nested).
+# print([add_10(i) for i in [1, 2, 3]])  # => [11, 12, 13]
+# print([x for x in [3, 4, 5, 6, 7] if x > 5]) # => [6, 7]
+
+# You can construct set and dict comprehensions as well.
+# print({x for x in 'abcdef' if x not in 'abc'})  # => {'d', 'e', 'f'}
+# print({x: x **2 for x in range(5)})  # => {0: 0, 1: 1, 2: 4, 3: 9, 4: 16}
+
+
+
+###################################
+## 5. Modules
+###################################
+
+# You can import modules
+import math
+print(math.sqrt(16))  # => 4.0
+
+# You can get specific functions from a module

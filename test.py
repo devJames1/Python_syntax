@@ -774,6 +774,408 @@ add_10 = create_adder(10)
 
 # You can import modules
 import math
-print(math.sqrt(16))  # => 4.0
+# print(math.sqrt(16))  # => 4.0
 
 # You can get specific functions from a module
+from math import ceil, floor
+# print(ceil(3.7)) # => 4
+# print(floor(3.7)) # => 3
+
+# You can import all functions from a module.
+# Warning: this is not recommended
+# from math import *
+
+# You can shorten module names
+import math as m
+# print(math.sqrt(16) == m.sqrt(16)) # => True
+
+# Python modules are just ordinary Python files. You
+# can write your own, and import them. The name of the
+# module is the same as the name of the file.
+
+# You can find out which functions and attributes
+# are defined in a module.
+# print(dir(math))
+
+# If you have a Python script named math.py in the same
+# folder as your current script, the file math.py will
+# be loaded instead of the built-in Python module.
+# This happens because the local folder has priority
+# over Python's built-in libraries.
+
+
+
+###################################
+## 6. Classes
+####################################
+
+##########
+# Moved to its own file to enhance modularity
+###########
+
+# # We use the "class" statement to create a class
+# class Human:
+#     # A class attribute. It is shared by all instances of this class
+#     species = "H. sapiens"
+
+#     # Basic initializer, this is called when this class is instantiated.
+#     # Note that the double leading and trailing underscores denote objects
+#     # or attributes that are used by Python but that live in user-controlled
+#     # namespaces. Methods(or objects or attributes) like: __init__, __str__,
+#     # __repr__ etc. are called special methods (or sometimes called dunder
+#     # methods). You should not invent such names on your own.
+#     def __init__(self, name):
+#         # Assign the argument to the instance's name attribute
+#         self.name = name
+
+#         # Initialize property
+#         self._age = 0  # the leading underscore indicates the "age" property is 
+#                         # intended to be used internally
+#                         # do not rely on this to be enforced: it's a hint to other devs
+        
+#     # An instance method. All methods take "self" as the first argument
+#     def say(self, msg):
+#         print("{name}: {message}".format(name=self.name, message=msg))
+    
+#     # Another instance method
+#     def sing(self):
+#         return 'yo.....yo...microphone check...one two...one two'
+    
+#     # A class method is shared among all instances
+#     # They are called with the calling class as the first argument
+#     @classmethod
+#     def get_species(cls):
+#         return cls.species
+    
+#     # A static method is called without a class or instance reference
+#     @staticmethod
+#     def grunt():
+#         return "*grunt*"
+    
+#     # A property is just like a getter.
+#     # It turns the method age() into a read-only attribute of the same name.
+#     # There's no need to write trivial getters and setters in Python, though.
+#     @property
+#     def age(self):
+#         return self._age
+    
+#     # This allows the property to be set
+#     @age.setter
+#     def age(self, age):
+#         self._age = age
+
+#     # This allows the property to be deleted
+#     @age.deleter
+#     def age(self):
+#         del self._age
+
+
+# When a Python interpreter reads a source file it executes all its code.
+# This __name__ check makes sure this code block is only executed when this
+# module is the main program.
+# if __name__ == '__main__':
+#     # Instantiate a class
+#     i = Human(name="Ian")
+#     i.say("hi") # "Ian: hi"
+#     j = Human("Joel") 
+#     j.say("hello") # "Joel: hello"
+#     # i and j are instances of type Human; i.e., they are Human objects.
+
+#     # Call our class method
+#     i.say(i.get_species())   # "Ian: H. sapiens"
+   
+#     # Change the shared attribute
+#     Human.species = "H. neanderthalensis"
+#     i.say(i.get_species()) # => "Ian: H. neanderthalensis"
+#     j.say(j.get_species()) # => "Joel: H. neanderthalensis"
+
+#     # Call the static method
+#     print(Human.grunt()) # => "*grunt*"
+
+#     # Static methods can be called by instances too
+#     print(i.grunt())      # => "*grunt*"
+
+#     # Update the property for this instance
+#     i.age = 42
+#     # Get the property
+#     i.say(i.age) # => "Ian: 42"
+#     j.say(j.age)  # => "Joel: 0"
+
+#     # Delete the property
+#     del i.age
+    # print(i.age)  # => this would raise an AttributeError
+
+
+
+######################################
+## 6.1 Inheritance
+######################################
+
+
+# Inheritance allows new child classes to be defined that inherit methods and
+# variables from their parent class.
+
+# Using the Human class defined above as the base or parent class, we can
+# define a child class, Superhero, which inherits the class variables like
+# "species", "name", and "age", as well as methods, like "sing" and "grunt"
+# from the Human class, but can also have its own unique properties.
+
+# To take advantage of modularization by file you could place the classes above
+# in their own files, say, human.py
+
+# To import functions from other files use the following format
+# from "filename-without-extension" import "function-or-class"
+
+# from human import Human
+
+# # Specify the parent class(es) as parameters to the class definition
+# class Superhero(Human):
+
+#     # If the child class should inherit all of the parent's definitions without
+#     # any modifications, you can just use the "pass" keyword (and nothing else)
+#     # but in this case it is commented out to allow for a unique child class:
+#     # pass
+
+#     # Child classes can override their parents' attributes
+#     species = 'Superhuman'
+
+#     # Children automatically inherit their parent class's constructor including
+#     # its arguments, but can also define additional arguments or definitions
+#     # and override its methods such as the class constructor.
+#     # This constructor inherits the "name" argument from the "Human" class and
+#     # adds the "superpower" and "movie" arguments:
+#     def __init__(self, name, movie=False, superpowers=["super strength", "bulletproofing"]):
+#         # add additional class attributes:
+#         self.fictional = True
+#         self.movie = movie
+#         # be aware of mutable default values, since defaults are shared
+#         self.superpowers = superpowers
+
+#         # The "super" function lets you access the parent class's methods
+#         # that are overridden by the child, in this case, the __init__ method.
+#         # This calls the parent class constructor:
+#         super().__init__(name)
+
+#     # override the sing method
+#     def sing(self):
+#         return 'Dun, dun, DUN'
+    
+#     # add an additional instance method
+#     def boast(self):
+#         for power in self.superpowers:
+#             print("I wield the power of {pow}!".format(pow=power))
+
+
+# if __name__ == "__main__":
+#     sup = Superhero(name="Tick")
+
+    # Instance type checks
+    # if isinstance(sup, Human):
+    #     print("I am human")
+    # if type(sup) is Superhero:
+    #     print("I am a superhero")
+
+     # Get the "Method Resolution Order" used by both getattr() and super()
+    # (the order in which classes are searched for an attribute or method)
+    # This attribute is dynamic and can be updated
+    # print(Superhero.__mro__) # => (<class '__main__.Superhero'>,
+                                # => <class 'human.Human'>, <class 'object'>)
+
+    # Calls parent method but uses its own class attribute
+    # print(sup.get_species())  # => Superhuman
+
+    # Calls overridden method
+    # print(sup.sing())  # => Dun, dun, DUN!
+
+    # Calls method from Human
+    # sup.say("Spoon")  # => Tick: Spoon
+
+    # Call method that exists only in Superhero
+    # sup.boast()  # => I wield the power of super strength!
+                                # => I wield the power of bulletproofing!
+
+    # Inherited class attribute
+    # sup.age = 31 
+    # print(sup.age)  # => 31
+
+    # Attribute that only exists within Superhero
+    # print("Am I Oscar eligible? " + str(sup.movie))
+
+
+
+
+#############################################
+## 6.2 Multiple Inheritance
+#############################################
+# Another class definition
+# bat.py check file bat.py
+
+# And yet another class definition that inherits from Superhero and Bat
+# superhero.py
+# from superhero import Superhero
+# from bat import Bat
+
+# # Define Batman as a child that inherits from both Superhero and Bat
+# class Batman(Superhero, Bat):
+#     def __init__(self, *args, **kwargs):
+#         # Typically to inherit attributes you have to call super:
+#         # super(Batman, self).__init__(*args, **kwargs)
+#         # However we are dealing with multiple inheritance here, and super()
+#         # only works with the next base class in the MRO list.
+#         # So instead we explicitly call __init__ for all ancestors.
+#         # The use of *args and **kwargs allows for a clean way to pass
+#         # arguments, with each parent "peeling a layer of the onion".
+#         Superhero.__init__(self, "anonymous", movie=True, superpowers=["Wealthy"], *args, **kwargs)
+#         Bat.__init__(self, *args, can_fly=False, **kwargs)
+#         # override the value for the name attribute
+#         self.name = 'Sad Affleck'
+
+#     def sing(self):
+#         return "nan nan nan nan nan batman!"    
+
+
+# if __name__ == "__main__":
+#     sup = Batman()
+
+#     # The Method Resolution Order
+#     # print(Batman.__mro__) # => (<class '__main__.Batman'>,
+#                                 # => <class 'superhero.Superhero'>,
+#                                 # => <class 'human.Human'>,
+#                                 # => <class 'bat.Bat'>, <class 'object'>)
+
+#     # Calls parent method but uses its own class attribute
+#     print(sup.get_species()) 
+
+#     # Calls overridden method
+#     print(sup.sing())  # => nan nan nan nan nan batman!
+
+#     # Calls method from Human, because inheritance order matters
+#     sup.say("I agree") # => Sad Affleck: I agree
+
+#     # Call method that exists only in 2nd ancestor
+#     print(sup.sonar()) # => ))) ... (((
+    
+#     # Inherited class attribute
+#     sup.age = 100
+#     print(sup.age) # => 100
+
+#     # Inherited attribute from 2nd ancestor whose default value was overridden.
+#     print("can I fly? " + str(sup.fly))
+
+
+
+##################################
+## 7. Advanced
+##################################
+
+# Generators help you make lazy code.
+def double_numbers(iterable):
+    for i in iterable:
+        yield i + 1
+
+# gen = double_numbers((1, 2, 3, 4, 5))
+
+# This comment is accurate. Generators allow for lazy 
+# evaluation, meaning they produce values on-the-fly and only when
+#  requested. In contrast to creating a list where all elements are 
+# generated and stored in memory, a generator produces one value at
+#  a time, saving memory.
+
+# Using a generator
+# gen = double_numbers([1, 2, 3, 4, 5])
+
+# # No values are generated yet
+
+# # Requesting values one at a time
+# for value in gen:
+#     print(value)
+
+# This allows you to iterate through the values without creating an entire 
+# list in memory. The generator produces each incremented value as needed,
+#  making it more memory-efficient, especially when working with large 
+# datasets.
+
+# Generators are memory-efficient because they only load the data needed to
+# process the next value in the iterable. This allows them to perform
+# operations on otherwise prohibitively large value ranges.
+# NOTE: `range` replaces `xrange` in Python 3.
+# for i in double_numbers(range(1, 900000000)): # `range` is a generator.
+#     print(i)
+#     if i >= 30:
+#         break
+
+
+# Just as you can create a list comprehension, you can create generator
+# comprehensions as well.
+# values = (-x for x in [1, 2, 3, 4, 5])
+# print(values)
+# for x in values:
+    # print(x) # prints -1 -2 -3 -4 -5 to console/terminal
+
+# You can also cast a generator comprehension directly to a list.
+# values = (-x for x in [1, 2, 3, 4, 5])
+# gen_to_list = list(values)
+# print(gen_to_list) # => [-1, -2, -3, -4, -5]
+
+
+# Decorators are a form of syntactic sugar.
+# They make code easier to read while accomplishing clunky syntax.
+
+# Wrappers are one type of decorator.
+# They're really useful for adding logging to existing functions without needing to modify them.
+
+# def log_function(func):
+#     def wrapper(*args, **kwargs):
+#         print("Entering function", func.__name__)
+#         result = func(*args, **kwargs)
+#         print("Exiting function", func.__name__)
+#         return result
+#     return wrapper
+
+# @log_function                   # equivalent:
+# def my_function(x, y):       # def my_function(x,y):
+#    return print(x + y)              #   return x+y
+                            # my_function = log_function(my_function)
+# The decorator @log_function tells us as we begin reading the function definition
+# for my_function that this function will be wrapped with log_function.
+# When function definitions are long, it can be hard to parse the non-decorated
+# assignment at the end of the definition.
+
+# my_function(1, 2)  # => "Entering function my_function"
+                 # => "3"
+                 # => "Exiting function my_function"
+
+# But there's a problem.
+# What happens if we try to get some information about my_function?
+
+# print(my_function.__name__) # => 'wrapper'
+# print(my_function.__code__.co_argcount) # => 0. The argcount is 0 because both arguments in wrapper()'s signature are optional.
+
+# Because our decorator is equivalent to my_function = log_function(my_function)
+# we've replaced information about my_function with information from wrapper
+
+# Fix this using functools
+
+from functools import wraps
+
+def log_function(func):
+    @wraps(func)  # this ensures docstring, function name, arguments list, etc. are all copied
+                 # to the wrapped function - instead of being replaced with wrapper's info
+    def wrapper(*args, **kwargs):
+        print("Entering function", func.__name__)
+        result = func(*args, **kwargs)
+        print("Exiting function", func.__name__)
+        return result
+    return wrapper
+
+@log_function
+def my_function(x, y):
+    return x + y
+
+result = my_function(1, 2)  # => "Entering function my_function"
+                 # => "3"
+                 # => "Exiting function my_function"
+
+print(result)
+print(my_function.__name__)  # => 'my_function'
+print(my_function.__wrapped__.__code__.co_argcount) # => 2

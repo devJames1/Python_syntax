@@ -1156,26 +1156,257 @@ def double_numbers(iterable):
 
 # Fix this using functools
 
-from functools import wraps
+# from functools import wraps
 
-def log_function(func):
-    @wraps(func)  # this ensures docstring, function name, arguments list, etc. are all copied
-                 # to the wrapped function - instead of being replaced with wrapper's info
-    def wrapper(*args, **kwargs):
-        print("Entering function", func.__name__)
-        result = func(*args, **kwargs)
-        print("Exiting function", func.__name__)
-        return result
-    return wrapper
+# def log_function(func):
+#     @wraps(func)  # this ensures docstring, function name, arguments list, etc. are all copied
+#                  # to the wrapped function - instead of being replaced with wrapper's info
+#     def wrapper(*args, **kwargs):
+#         print("Entering function", func.__name__)
+#         result = func(*args, **kwargs)
+#         print("Exiting function", func.__name__)
+#         return result
+#     return wrapper
 
-@log_function
-def my_function(x, y):
-    return x + y
+# @log_function
+# def my_function(x, y):
+#     return x + y
 
-result = my_function(1, 2)  # => "Entering function my_function"
-                 # => "3"
-                 # => "Exiting function my_function"
+# result = my_function(1, 2)  # => "Entering function my_function"
+#                  # => "3"
+#                  # => "Exiting function my_function"
 
-print(result)
-print(my_function.__name__)  # => 'my_function'
-print(my_function.__wrapped__.__code__.co_argcount) # => 2
+# print(result)
+# print(my_function.__name__)  # => 'my_function'
+# print(my_function.__wrapped__.__code__.co_argcount) # => 2
+
+# get the weight and unit input from user
+# print("This program convert between kg(K) and lbs")
+# current_unit = input("What is your current unit kg(k) or lbs(l): ")
+# weight = float(input("Enter your weigh: "))
+
+# # conditions and convertion based on input
+# if current_unit.upper() == "K":
+#     converted_weight = weight / 0.45 
+#     print(f"Weight: {converted_weight}lbs")
+# elif current_unit.upper() == "L":
+#     converted_weight = weight * 0.45
+#     print(f"Weight: {converted_weight}kg")
+# else:
+#     print("Sorry weight unit not covered or unavailable")
+
+# set = {1, 2, 3}
+# set.add(6)
+# print(set)
+
+# n = 300
+# m = n
+
+# print(id(m))
+# print(id(n))
+
+# m = 400
+# print(id(m))
+
+# m = 30000000
+# n = 30000000
+# print(id(m))
+# print(id(n))
+# For purposes of optimization, the interpreter creates objects for the integers in the range [-5, 256] at startup, and then reuses them during program execution. Thus, when you assign separate variables to an integer value in this range, they will actually reference the same object.
+
+# def main():
+#     total = 50
+#     # country = "US"
+#     country = "AU"
+#     if country == "US":
+#         if total <= 50:
+#             print("Shipping Cost is  $50")
+#     elif total <= 100:
+#         print("Shipping Cost is $25")
+#     elif total <= 150:
+#         print("Shipping Costs $5")
+#     else:
+#         print("FREE")
+
+#     if country == "AU":
+#         if total <= 50:
+#             print("Shipping Cost is  $100")
+#     else:
+#         print("FREE")
+
+
+# if __name__ == "__main__":
+# 	main()
+
+
+#Implementing familiar switch statement with Python's new 'match case' Statement 
+# command = "Goodbye, World!"
+# match command:
+#     case "Hello, World!":
+#         print("Hello to you too!")
+#     case "Goodbye, World!":
+#         print("See you later")
+#     case other:
+#         print("No match found")
+
+# def file_handler_v1(command):
+#     match command.split():
+#         case ['show']:
+#             print("List all files and directories: ")
+#             # code to list files
+#         case ['remove', *files]:
+#             print("Removing files: {}".format(files))
+#             # code to remove files
+#         case _:
+#             print("Command not recognized")
+
+# # file_handler_v1("show")
+# file_handler_v1("remove file1.txt file2.jpg file3.pdf")
+
+
+
+############################################
+# Python Type Conversion
+############################################
+# integer_number = 123
+# float_number = 1.23
+
+# new_number = integer_number + float_number
+
+# print("value:",new_number)
+# print("Data Type:", type(new_number))
+
+
+
+############################################
+# Python Handling Exceptions and errors
+############################################
+
+# def main():
+#     try:
+#         numerator = 10
+#         denominator = 0
+
+#         result = numerator / denominator
+#         print(result)
+#     except:
+#         print("Error: Denominator cannot be 0")
+
+
+
+# if __name__ == "__main__":
+# 	main()
+
+
+# def main():
+#    try:
+#         numerator = 10
+#         denominator = 0
+
+#         result = numerator / denominator
+#         print(result)
+
+#         even_numbers = [2, 4, 6, 8]
+#         print(even_numbers[5])
+#    except ZeroDivisionError:
+#        print("Denomitor cannot be 0") #this error is shown first and then when fixed second error is shown
+#    except IndexError:
+#        print("Index Out of Bound")
+
+
+
+
+# if __name__ == "__main__":
+# 	main()
+
+# def main():
+#     try:
+#         num = int(input("Enter a number: "))
+#         assert num % 2 == 0
+#     except:
+#         print("Not an even number!")
+#     else:
+#         reciprocal = 1/num
+#         print(reciprocal)
+#     finally:
+#         print("This is finally block.")
+
+
+
+# if __name__ == "__main__":
+#     main()
+
+
+# Raising an Exception
+# x = 10
+# if x > 5:
+#     raise Exception("x should not exceed 5. The value of x was: {}".format(x))
+
+# The AssertionError Exception
+# import sys
+# assert ("linux" in sys.platform), "This code runs on Linux only"
+
+# The try and except Block: Handling Exceptions
+import sys
+def linux_interaction():
+    assert ("linx" in sys.platform), "Function can only run on Linux systems."
+    print("Doing something.")
+
+# try:
+#     linux_interaction()
+# except AssertionError as error:
+#     print("Error: {}".format(error))
+#     print("Linux function was not executed")
+
+# try:
+#     with open("file.log") as file:
+#         read_data = file.read()
+# except FileNotFoundError as fnf_error:
+#     print("Error: {}".format(fnf_error))
+
+
+# Catching Exception hides all errors…even 
+# those which are completely unexpected. This is why you 
+# should avoid bare except clauses in your Python programs.
+# Instead, you’ll want to refer to specific exception
+# classes you want to catch and handle
+
+# try:
+#     linux_interaction()
+#     with open("file.log") as file:
+#         read_data = file.read()
+# except FileNotFoundError as fnf_error:
+#     print(fnf_error)
+# except AssertionError as error:
+#     print(error)
+#     print('Linux linux_interaction() function was not executed')
+
+
+# The else Clause
+# try:
+#     linux_interaction()
+# except AssertionError as error:
+#     print(error)
+# else:
+#     try:
+#         with open('file.log') as file:
+#             read_data = file.read()
+#     except FileNotFoundError as fnf_error:
+#         print(fnf_error)
+
+
+# Cleaning Up After Using finally
+# try:
+#     linux_interaction()
+# except AssertionError as error:
+#     print(error)
+# else:
+#     try:
+#         with open("fle.log") as file:
+#             read_data = file.read()
+#     except FileNotFoundError as fnf_error:
+#             print(fnf_error)
+# finally:
+#     print("Cleaning up, irrespective of any exceptions.")
+
+
